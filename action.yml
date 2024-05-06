@@ -1,5 +1,11 @@
 name: 'Playwright Slack Reporter Action'
 description: 'Report Playwright test results to Slack'
+author: 'Ken Fukuyama'
+
+branding:
+  icon: 'award'
+  color: 'green'
+
 inputs:
   results-json-path:
     description: 'Path to the Playwright test results JSON file'
