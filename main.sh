@@ -1,3 +1,8 @@
+#!/bin/bash
+
+# Fail script on any error
+set -e
+
 json_path=$RESULTS_JSON_PATH
 artifact_url=$ARTIFACT_URL
 
