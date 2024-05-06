@@ -1,0 +1,26 @@
+name: 'Playwright Slack Reporter Action'
+description: 'Report Playwright test results to Slack'
+inputs:
+  results-json-path:
+    description: 'Path to the Playwright test results JSON file'
+    required: true
+  artifact-url:
+    description: 'URL to the Playwright test results artifact'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Run slack message generator
+      run: main.sh
+      shell: bash
+      env:
+        RESULTS_JSON_PATH: ${{ inputs.results-json-path }}
+        ARTIFACT_URL: ${{ inputs.artifact-url }}
+
+    - name: Slack Notification
+      uses: slackapi/slack-github-action@v1.26.0
+      with:
+        payload-file-path: "./payload-slack-content.json"
+      env:
+        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
