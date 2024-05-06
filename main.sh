@@ -6,10 +6,10 @@ set -e
 json_path=$RESULTS_JSON_PATH
 artifact_url=$ARTIFACT_URL
 
-# Parse JSON and build the Slack message payload
+# Parse JSON to build the Slack message payload
 payload=$(jq -r --arg artifact_url "$artifact_url" '
 # Initialize counters for passed and failed tests
-reduce .suites[].specs[] as $spec (
+reduce (.suites[] | (if .specs then .specs[] else empty end), (if .suites then .suites[].specs[] else empty end)) as $spec (
   {
     passed: 0,
     failed: 0,

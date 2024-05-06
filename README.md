@@ -17,7 +17,7 @@ This GitHub Action parses Playwright test results from a JSON file and sends a f
 Below is an example of how to set up this action in your .github/workflows directory:
 
 ```yaml
-name: Playwright Test Report
+name: Playwright Test
 on: [push]
 
 jobs:
@@ -26,11 +26,21 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Run Playwright tests
+        run: PLAYWRIGHT_JSON_OUTPUT_NAME=report/report.json npx playwright test --reporter=json
+      - name: Upload report to GitHub Actions Artifacts
+        id: report-upload-step
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: report
+          path: report/
+          retention-days: 30
       - name: Report to slack
         uses: kenfdev/playwright-report-slack-action
         with:
           results-json-path: 'report.json'
-          artifact-url: 'https://test.test'
+          artifact-url: ${{ steps.report-upload-step.outputs.artifact-url }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 ```
