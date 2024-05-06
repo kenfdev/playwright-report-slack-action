@@ -1,6 +1,8 @@
 # Playwright Test Reporter to Slack
 This GitHub Action parses Playwright test results from a JSON file and sends a formatted report to a Slack channel using an Incoming Webhook. It is designed to help teams monitor test outcomes directly in Slack, providing quick insights into test failures and successes.
 
+![](./assets/slack.png)
+
 ## Features
 - **Test Result Summarization:** Summarizes the test results showing the number of passed and failed tests.
 - **Failed Test Details:** Lists only the failed tests
